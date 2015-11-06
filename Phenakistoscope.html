@@ -9,24 +9,30 @@
         html {
             display: table;
             margin: auto;
-            margin-top: -260px;
         }
         body{
             display: table-cell;
         }
 
+        .phenakistoscope-container {
+            padding-top: 15px;
+            margin-bottom: 30px;
+        }
+
     </style>
 </head>
 <body>
-    <img id="PhenakistoscopeImg" src="Phenakistoscope.png"/>
+    <div class="phenakistoscope-container">
+        <img id="PhenakistoscopeImg" src="Phenakistoscope.png"/>
+    </div>
 
-    <div style="margin-top: 50px">
+    <div>
         <div>
             <button id="startStopBtn">Stop</button>
         </div>
         <div>
-            <label>Speed</label>
-            <input id="speedRange" type="range" min="0" max="1000" value="100" />
+            <label for="speedRange">Speed</label>
+            <input id="speedRange" type="range" min="0" value="375" />
         </div>
     </div>
 
@@ -39,6 +45,25 @@
             alert('Looks like you are using an old web browser, such as Internet Explorer 8-9. This page will not work properly, please use Chrome, Firefox or IE 10+');
         }
 
+        var speedRange = document.getElementById('speedRange');
+
+        var maxDelay = 500;
+        speedRange.setAttribute('max', maxDelay);
+
+        var delay = maxDelay - parseInt(speedRange.value);
+
+        speedRange.addEventListener('input', function() {
+            delay = maxDelay - parseInt(speedRange.value);
+        });
+
+        var startStopBtn = document.getElementById('startStopBtn');
+
+        var isRunning = true;
+
+        startStopBtn.addEventListener('click', function() {
+            isRunning = !isRunning;
+            startStopBtn.innerHTML = isRunning ? 'Stop' : 'Start';
+        });
 
         var imageCount = 11;
 
@@ -49,7 +74,7 @@
         var lastRotationTimestamp = null;
 
         function step(timestamp) {
-            if (!lastRotationTimestamp || (Math.abs(lastRotationTimestamp - timestamp) > 150)) {
+            if (isRunning && (!lastRotationTimestamp || (Math.abs(lastRotationTimestamp - timestamp) > delay))) {
                 lastRotationTimestamp = timestamp;
 
                 deg += rotationDeg;
@@ -59,9 +84,6 @@
 
             window.requestAnimationFrame(step);
         }
-
-        result = CSS.supports("display", "flex");
-
 
         window.requestAnimationFrame(step);
 
