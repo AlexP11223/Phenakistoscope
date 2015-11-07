@@ -14,11 +14,11 @@
         }
         body{
             display: table-cell;
+            font-family: Sans-Serif,serif;
         }
 
         .phenakistoscope-container {
             padding: 15px;
-            margin-bottom: 30px;
             position: relative;
         }
 
@@ -53,6 +53,11 @@
             transform: skew(16deg);
         }
 
+        .settings-container {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
     </style>
 </head>
 <body>
@@ -64,7 +69,7 @@
         <div class="mask mask-right"></div>
     </div>
 
-    <div>
+    <div class="settings-container">
         <div>
             <button id="startStopBtn">Stop</button>
         </div>
@@ -73,6 +78,8 @@
             <input id="speedRange" type="range" min="0" max="500" value="375" />
         </div>
     </div>
+
+    <p>The galloping horse images are from <a href="http://opengameart.org/content/galloping-horse">http://opengameart.org/content/galloping-horse</a> <br/> (based on <a href="https://en.wikipedia.org/wiki/Sallie_Gardner_at_a_Gallop">photographs by Eadweard Muybridge, 1878</a>) </p>
 
     <script type="text/javascript">
         function browserCompatible() {
