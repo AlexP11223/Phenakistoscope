@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<!-- saved from url=(0016)http://localhost --> <!-- this line is to allow JS in IE when running as local page (Wi), otherwise IE blocks it by default -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Phenakistoscope</title>
 
     <style type="text/css">
@@ -68,7 +70,7 @@
         </div>
         <div>
             <label for="speedRange">Speed</label>
-            <input id="speedRange" type="range" min="0" value="375" />
+            <input id="speedRange" type="range" min="0" max="500" value="375" />
         </div>
     </div>
 
@@ -84,11 +86,13 @@
         var speedRange = document.getElementById('speedRange');
 
         var maxDelay = 500;
-        speedRange.setAttribute('max', maxDelay);
 
         var delay = maxDelay - parseInt(speedRange.value);
 
         speedRange.addEventListener('input', function() {
+            delay = maxDelay - parseInt(speedRange.value);
+        });
+        speedRange.addEventListener('change', function() { // for IE
             delay = maxDelay - parseInt(speedRange.value);
         });
 
