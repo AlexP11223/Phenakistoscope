@@ -7,14 +7,14 @@
     <title>Phenakistoscope</title>
 
     <style type="text/css">
-
-        html {
+        body{
             display: table;
             margin: auto;
-        }
-        body{
-            display: table-cell;
             font-family: Sans-Serif,serif;
+        }
+
+        #mainContainer {
+            display: table-cell;
         }
 
         .phenakistoscope-container {
@@ -34,28 +34,42 @@
             margin-bottom: 25px;
         }
 
+        .settings-container div {
+            margin-bottom: 10px;
+        }
+
+        .partially-visible {
+            margin-top: -350px;
+        }
+
     </style>
 </head>
-<body>
-    <div class="phenakistoscope-container">
-        <img id="PhenakistoscopeImg" src="Phenakistoscope.png"/>
+<body class="partially-visible">
+    <div id="mainContainer">
+        <div class="phenakistoscope-container">
+            <img id="PhenakistoscopeImg" src="Phenakistoscope.png"/>
 
-        <svg class="mask" width="100%" height="100%" viewbox="0 0 798 798">
-            <path d="M0 0 L0 798 L270 798 L340 570 L455 570 L520 798 L798 798 L798 0 L0 0 Z" fill="black" opacity="0.78"></path>
-        </svg>
-    </div>
-
-    <div class="settings-container">
-        <div>
-            <button id="startStopBtn">Stop</button>
+            <svg class="mask" width="100%" height="100%" viewbox="0 0 798 798">
+                <path d="M0 0 L0 798 L270 798 L340 570 L455 570 L520 798 L798 798 L798 0 L0 0 Z" fill="black" opacity="0.78"></path>
+            </svg>
         </div>
-        <div>
-            <label for="speedRange">Speed</label>
-            <input id="speedRange" type="range" min="0" max="500" value="375" />
-        </div>
-    </div>
 
-    <p>The galloping horse images are from <a href="http://opengameart.org/content/galloping-horse">http://opengameart.org/content/galloping-horse</a> <br/> (based on <a href="https://en.wikipedia.org/wiki/Sallie_Gardner_at_a_Gallop">photographs by Eadweard Muybridge, 1878</a>) </p>
+        <div class="settings-container">
+            <div>
+                <button id="startStopBtn">Stop</button>
+            </div>
+            <div>
+                <label for="speedRange">Speed</label>
+                <input id="speedRange" type="range" min="0" max="500" value="375" />
+            </div>
+            <div>
+                <input id="showFullChk" type="checkbox"/>
+                <label for="showFullChk">Show full</label>
+            </div>
+        </div>
+
+        <p>The galloping horse images are from <a href="http://opengameart.org/content/galloping-horse">http://opengameart.org/content/galloping-horse</a> <br/> (based on <a href="https://en.wikipedia.org/wiki/Sallie_Gardner_at_a_Gallop">photographs by Eadweard Muybridge, 1878</a>) </p>
+    </div>
 
     <script type="text/javascript">
         function browserCompatible() {
@@ -86,6 +100,17 @@
         startStopBtn.addEventListener('click', function() {
             isRunning = !isRunning;
             startStopBtn.innerHTML = isRunning ? 'Stop' : 'Start';
+        });
+
+        var showFullChk = document.getElementById('showFullChk');
+
+        showFullChk.addEventListener('change', function() {
+            if (showFullChk.checked) {
+                document.body.setAttribute('class', '');
+            }
+            else {
+                document.body.setAttribute('class', 'partially-visible');
+            }
         });
 
         var imageCount = 11;
